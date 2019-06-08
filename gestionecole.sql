@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 07 juin 2019 à 13:51
+-- Généré le :  sam. 08 juin 2019 à 16:38
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.10
 
@@ -47,7 +47,19 @@ CREATE TABLE IF NOT EXISTS `bulletin` (
   `Eleve.id` varchar(255) NOT NULL,
   `appreciation` text NOT NULL,
   PRIMARY KEY (`id_bulletin`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `bulletin`
+--
+
+INSERT INTO `bulletin` (`id_bulletin`, `Trimestre.id`, `Eleve.id`, `appreciation`) VALUES
+(1, 1, 'Rahli', 'Ensemble convenable.'),
+(2, 2, 'Rahli', 'De nets progrés'),
+(3, 3, 'Rahli', 'Excellent trimestre'),
+(4, 1, 'Moutai', 'Ensemble moyen'),
+(5, 2, 'Moutai', 'De nets progrès en informatique'),
+(6, 3, 'Moutai', 'Excellente fin d\'année');
 
 -- --------------------------------------------------------
 
@@ -62,7 +74,19 @@ CREATE TABLE IF NOT EXISTS `classe` (
   `Niveau.id` varchar(255) NOT NULL,
   `AnneeScolaireClasse.id` int(11) NOT NULL,
   PRIMARY KEY (`id_classe`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `classe`
+--
+
+INSERT INTO `classe` (`id_classe`, `nom`, `Niveau.id`, `AnneeScolaireClasse.id`) VALUES
+(1, 'toto', 'CP', 2018),
+(2, 'tata', 'CE1', 2018),
+(3, 'titi', 'CE2', 2018),
+(4, 'tete', 'CM1', 2018),
+(5, 'tyty', 'CM2', 2018),
+(6, 'pepe', 'CP', 2019);
 
 -- --------------------------------------------------------
 
@@ -90,7 +114,22 @@ CREATE TABLE IF NOT EXISTS `discipline` (
   `id_discipline` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) NOT NULL,
   PRIMARY KEY (`id_discipline`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `discipline`
+--
+
+INSERT INTO `discipline` (`id_discipline`, `nom`) VALUES
+(1, 'Mathématiques'),
+(2, 'Langage C'),
+(3, 'Anglais'),
+(4, 'Java'),
+(5, 'Traitement du signal'),
+(6, 'Web dynamique'),
+(7, 'Thermodynamique'),
+(8, 'Electronique'),
+(9, 'Robotique');
 
 -- --------------------------------------------------------
 
@@ -103,8 +142,30 @@ CREATE TABLE IF NOT EXISTS `eleve` (
   `id_eleve` int(11) NOT NULL AUTO_INCREMENT,
   `Nom` varchar(255) NOT NULL,
   `Prenom` varchar(255) NOT NULL,
+  `ClasseElev` varchar(255) NOT NULL,
   PRIMARY KEY (`id_eleve`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `eleve`
+--
+
+INSERT INTO `eleve` (`id_eleve`, `Nom`, `Prenom`, `ClasseElev`) VALUES
+(1, 'Rahli', 'Sofiane', 'CP'),
+(2, 'Moutai', 'Zakaria', 'CP'),
+(6, 'Bout', 'Marc', 'CP'),
+(5, 'Bill', 'Pierre', 'CE1'),
+(7, 'Part', 'Melanie', 'CE1'),
+(8, 'Zadu', 'Jeanne', 'CE1'),
+(9, 'Soure', 'Magalie', 'CE2'),
+(10, 'Soulax', 'Abdel', 'CE2'),
+(11, 'Maitre', 'Gims', 'CE2'),
+(12, 'Ronaldo', 'Cristiano', 'CM1'),
+(13, 'Shakira', 'Waka', 'CM1'),
+(14, 'Eponge ', 'Bob', 'CM1'),
+(15, 'Bou', 'Adibou', 'CM2'),
+(16, 'Spyro', 'Dragon', 'CM2'),
+(17, 'Potter', 'Harry', 'CM2');
 
 -- --------------------------------------------------------
 
@@ -119,7 +180,22 @@ CREATE TABLE IF NOT EXISTS `enseignement` (
   `DisciplineEns.id` varchar(255) NOT NULL,
   `Prof.id` varchar(255) NOT NULL,
   PRIMARY KEY (`id_ens`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `enseignement`
+--
+
+INSERT INTO `enseignement` (`id_ens`, `ClasseEns.id`, `DisciplineEns.id`, `Prof.id`) VALUES
+(1, 1, 'Java ', 'Palasi'),
+(2, 1, 'Langage C', 'Segado'),
+(3, 1, 'Mathematiques', 'Le Cor'),
+(4, 2, 'Electronique', 'Nacer'),
+(5, 2, 'Traitement du signal', 'Mokhber'),
+(6, 2, 'Robotique', 'Minot'),
+(7, 3, 'Anglais', 'Leonard'),
+(8, 3, 'Geopolitique', 'Mouhali'),
+(9, 3, 'Analyse de Fourier', 'Coudray');
 
 -- --------------------------------------------------------
 
@@ -147,7 +223,18 @@ CREATE TABLE IF NOT EXISTS `niveau` (
   `id_niveau` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) NOT NULL,
   PRIMARY KEY (`id_niveau`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `niveau`
+--
+
+INSERT INTO `niveau` (`id_niveau`, `nom`) VALUES
+(1, 'CP'),
+(2, 'CE1'),
+(3, 'CE2'),
+(4, 'CM1'),
+(5, 'CM2');
 
 -- --------------------------------------------------------
 
@@ -161,7 +248,22 @@ CREATE TABLE IF NOT EXISTS `prof` (
   `nomp` varchar(255) NOT NULL,
   `prenomp` varchar(255) NOT NULL,
   PRIMARY KEY (`id_prof`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `prof`
+--
+
+INSERT INTO `prof` (`id_prof`, `nomp`, `prenomp`) VALUES
+(1, 'Palasi', 'Pa'),
+(2, 'Segado', 'Se'),
+(3, 'Mouhali', 'Mo'),
+(4, 'Minot', 'Mi'),
+(5, 'Nacer', 'Na'),
+(6, 'Leonard', 'Le'),
+(7, 'Coudray', 'Co'),
+(8, 'Mokhber', 'Moo'),
+(9, 'Le Cor', 'Lee');
 
 -- --------------------------------------------------------
 
