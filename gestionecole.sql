@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 08 juin 2019 à 16:38
+-- Généré le :  Dim 09 juin 2019 à 18:29
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.10
 
@@ -21,6 +21,27 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `gestionecole`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `id_admin` int(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(255) NOT NULL,
+  `mdp` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_admin`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `user`, `mdp`) VALUES
+(1, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -43,23 +64,20 @@ CREATE TABLE IF NOT EXISTS `anneescolaire` (
 DROP TABLE IF EXISTS `bulletin`;
 CREATE TABLE IF NOT EXISTS `bulletin` (
   `id_bulletin` int(11) NOT NULL AUTO_INCREMENT,
-  `Trimestre.id` int(11) NOT NULL,
-  `Eleve.id` varchar(255) NOT NULL,
+  `Trimestre` int(11) NOT NULL,
+  `Eleve` varchar(255) NOT NULL,
   `appreciation` text NOT NULL,
   PRIMARY KEY (`id_bulletin`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `bulletin`
 --
 
-INSERT INTO `bulletin` (`id_bulletin`, `Trimestre.id`, `Eleve.id`, `appreciation`) VALUES
+INSERT INTO `bulletin` (`id_bulletin`, `Trimestre`, `Eleve`, `appreciation`) VALUES
 (1, 1, 'Rahli', 'Ensemble convenable.'),
-(2, 2, 'Rahli', 'De nets progrés'),
-(3, 3, 'Rahli', 'Excellent trimestre'),
-(4, 1, 'Moutai', 'Ensemble moyen'),
-(5, 2, 'Moutai', 'De nets progrès en informatique'),
-(6, 3, 'Moutai', 'Excellente fin d\'année');
+(2, 2, 'Rahli', 'Excellent'),
+(3, 3, 'Rahli', 'Ensemble en progrés');
 
 -- --------------------------------------------------------
 
@@ -71,22 +89,21 @@ DROP TABLE IF EXISTS `classe`;
 CREATE TABLE IF NOT EXISTS `classe` (
   `id_classe` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) NOT NULL,
-  `Niveau.id` varchar(255) NOT NULL,
-  `AnneeScolaireClasse.id` int(11) NOT NULL,
+  `Niveau` varchar(255) NOT NULL,
+  `AnneeScolaireClasse` int(11) NOT NULL,
   PRIMARY KEY (`id_classe`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `classe`
 --
 
-INSERT INTO `classe` (`id_classe`, `nom`, `Niveau.id`, `AnneeScolaireClasse.id`) VALUES
+INSERT INTO `classe` (`id_classe`, `nom`, `Niveau`, `AnneeScolaireClasse`) VALUES
 (1, 'toto', 'CP', 2018),
 (2, 'tata', 'CE1', 2018),
-(3, 'titi', 'CE2', 2018),
+(3, 'tntn', 'CEE', 2018),
 (4, 'tete', 'CM1', 2018),
-(5, 'tyty', 'CM2', 2018),
-(6, 'pepe', 'CP', 2019);
+(5, 'tyty', 'CM2', 2018);
 
 -- --------------------------------------------------------
 
@@ -114,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `discipline` (
   `id_discipline` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) NOT NULL,
   PRIMARY KEY (`id_discipline`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `discipline`
@@ -128,8 +145,7 @@ INSERT INTO `discipline` (`id_discipline`, `nom`) VALUES
 (5, 'Traitement du signal'),
 (6, 'Web dynamique'),
 (7, 'Thermodynamique'),
-(8, 'Electronique'),
-(9, 'Robotique');
+(8, 'Electoniquee');
 
 -- --------------------------------------------------------
 
@@ -144,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `eleve` (
   `Prenom` varchar(255) NOT NULL,
   `ClasseElev` varchar(255) NOT NULL,
   PRIMARY KEY (`id_eleve`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `eleve`
@@ -154,7 +170,7 @@ INSERT INTO `eleve` (`id_eleve`, `Nom`, `Prenom`, `ClasseElev`) VALUES
 (1, 'Rahli', 'Sofiane', 'CP'),
 (2, 'Moutai', 'Zakaria', 'CP'),
 (6, 'Bout', 'Marc', 'CP'),
-(5, 'Bill', 'Pierre', 'CE1'),
+(5, 'Pierr', 'Bi', 'CE2'),
 (7, 'Part', 'Melanie', 'CE1'),
 (8, 'Zadu', 'Jeanne', 'CE1'),
 (9, 'Soure', 'Magalie', 'CE2'),
@@ -165,7 +181,8 @@ INSERT INTO `eleve` (`id_eleve`, `Nom`, `Prenom`, `ClasseElev`) VALUES
 (14, 'Eponge ', 'Bob', 'CM1'),
 (15, 'Bou', 'Adibou', 'CM2'),
 (16, 'Spyro', 'Dragon', 'CM2'),
-(17, 'Potter', 'Harry', 'CM2');
+(17, 'Potter', 'Harry', 'CM2'),
+(40, 'Mario', 'Super', 'CE2');
 
 -- --------------------------------------------------------
 
@@ -176,26 +193,25 @@ INSERT INTO `eleve` (`id_eleve`, `Nom`, `Prenom`, `ClasseElev`) VALUES
 DROP TABLE IF EXISTS `enseignement`;
 CREATE TABLE IF NOT EXISTS `enseignement` (
   `id_ens` int(11) NOT NULL AUTO_INCREMENT,
-  `ClasseEns.id` int(11) NOT NULL,
-  `DisciplineEns.id` varchar(255) NOT NULL,
-  `Prof.id` varchar(255) NOT NULL,
+  `ClasseEns` varchar(255) NOT NULL,
+  `DisciplineEns` varchar(255) NOT NULL,
+  `Prof` varchar(255) NOT NULL,
   PRIMARY KEY (`id_ens`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `enseignement`
 --
 
-INSERT INTO `enseignement` (`id_ens`, `ClasseEns.id`, `DisciplineEns.id`, `Prof.id`) VALUES
-(1, 1, 'Java ', 'Palasi'),
-(2, 1, 'Langage C', 'Segado'),
-(3, 1, 'Mathematiques', 'Le Cor'),
-(4, 2, 'Electronique', 'Nacer'),
-(5, 2, 'Traitement du signal', 'Mokhber'),
-(6, 2, 'Robotique', 'Minot'),
-(7, 3, 'Anglais', 'Leonard'),
-(8, 3, 'Geopolitique', 'Mouhali'),
-(9, 3, 'Analyse de Fourier', 'Coudray');
+INSERT INTO `enseignement` (`id_ens`, `ClasseEns`, `DisciplineEns`, `Prof`) VALUES
+(1, 'toto', 'Java ', 'Palasi'),
+(2, 'toto', 'Langage C', 'Segado'),
+(3, 'toto', 'Mathematiques', 'Le Cor'),
+(4, 'titi', 'Electronique', 'Nacer'),
+(5, 'titi', 'Traitement du signal', 'Mokhber'),
+(6, 'titi', 'Robotique', 'Minot'),
+(7, 'titi', 'Anglais', 'Leonard'),
+(8, 'CM2', 'Saut en parachute', 'Doure');
 
 -- --------------------------------------------------------
 
